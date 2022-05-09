@@ -142,9 +142,22 @@ if __name__ == "__main__":
             if np.amax(rez)==0:
                 print(f"Niz {zaporedje_bitov} je veljavna kodna zamenjava.")
             else:
+                h = []
                 # odkrij napako
+                for col in range(H.shape[1]):
+                    h.append(H[:, col])
 
-
+                #print(h)
+                h = [x.tolist() for x in h]
+                #print(h)
+                if rez.tolist() in h:
+                    rez_list = rez.tolist()
+                    #print(f"Found: {rez_list} : {h}")
+                    err_index = h.index(rez_list)
+                    print(f"Found in column: {(h.index(rez_list))+1}\n")
+                    zap_list = zaporedje_bitov.tolist()
+                    zap_list[err_index] = not int(zaporedje_bitov[err_index])
+                    print(f"Zaporedje bitov: {zap_list}\n")
                 # popravi napako
 
                 # Izpisi veljavno zamenjavo
