@@ -1,9 +1,8 @@
 from itertools import product
-from operator import xor
+from typing import final
 import numpy as np
 import math
 import sys
-
 
 
 class BlockCode:
@@ -53,22 +52,22 @@ def kodneZamenjave(H, D, m_d):
 
     return M
 
+
 def generiraj_binarne(n):
     """
     generiraj binarne nize z n-znakov.
     """
     bin_str = [''.join(p) for p in product('10', repeat=n)]
-    
+
     bin_str.reverse()
 
     X = [list(x) for x in bin_str]
 
     for ind_str, x_str in enumerate(X):
         for ind_x, x in enumerate(x_str):
-            X[ind_str][ind_x]=int(x)
-    
-    return X
+            X[ind_str][ind_x] = int(x)
 
+    return X
 
 
 def izpisNapak(M, n, k):
@@ -81,10 +80,10 @@ def izpisNapak(M, n, k):
     # n je dolzina kodnih zamenjav (n=k+m)
     # e je stevilo napak, ki jih lahko dekodiramo
     # Izracunamo argmax Hammingovega pogoja
-    i= 0
+    i = 0
     for e in range(num_kod):
         e_s += math.comb(n, i)
-        i+=1
+        i += 1
         #print(f"Suma e({e}): {e_s}")
 
         res = (2**n)/e_s
@@ -100,20 +99,17 @@ def izpisNapak(M, n, k):
 
     return e_max
 
+
 def izracunajKodne(X, H):
     M = []
     for index, x in enumerate(X):
-        rez = np.matmul(H, x) %2
+        rez = np.matmul(H, x) % 2
         if np.amax(rez) == 0:
             M.append(x)
-    
+
     M = np.array(M)
-    
+
     return M
-
-
-
-    
 
 
 def odkrivajPopravi(M, H):
@@ -126,7 +122,6 @@ def odkrivajPopravi(M, H):
             break
         elif len(zaporedje_bitov) == len(M[0]):
 
-            
             # string to array
             arr = list(zaporedje_bitov)
             arr = [int(x) for x in arr]
@@ -169,7 +164,39 @@ def odkrivajPopravi(M, H):
             print(
                 f"Napacna dolzina. Vnesli ste niz dolzine: {len(zaporedje_bitov)}\n")
 
+def decimal_to_bin(num):
+    if num >= 1:
+        decimal_to_bin(num // 2)
+    return num%2
 
+
+def create_H(n_max):
+    n_list = []
+    for n in range(1, n_max+1):
+        n_list.append(n)
+
+    n_list_bin = []
+    #bin_places = len(n_list[-1])
+
+    for dec_num in n_list:
+        bin_num = bin(dec_num)[2:]
+        n_list_bin.append(bin_num)
+
+    bin_places = len(n_list_bin[-1])
+
+    final_bin_list = []
+    for bin_str in n_list_bin:
+        if len(bin_str) < bin_places:
+            bin_str = (bin_places-len(bin_str))*"0" + str(bin_str)
+        final_bin_list.append(bin_str)
+    
+    h_cols = np.zeros((len(final_bin_list[0]), len(final_bin_list)))
+    # zapisi vrstice v stolpce
+    for i in range(len(final_bin_list[0])):
+        for ind_j, j in enumerate(final_bin_list):
+            h_cols[i][ind_j] = j[ind_j]
+
+    print(h_cols)
 
 if __name__ == "__main__":
     try:
@@ -178,9 +205,9 @@ if __name__ == "__main__":
     except IndexError:
         print("Usage of the script: python vaja5c.py <number of control bits>")
         sys.exit(1)
-    
+
     print(ctrl_bits)
-    
+
     # m = stevilo kontrolnih dvojiskih znakov
     # k = dolzina informacijskih blokov
     # n = dolzina kodnih zamenjav (n>k)
@@ -189,17 +216,17 @@ if __name__ == "__main__":
     # n = stevilo stolpcev v H
     # k = n-m
     # n = k+m
-    
+
     # TODO
     # Program sam tvori matriko za preverjanje sodosti Hammingovega koda za odpravljanje vseh enkratnih napak
     # Vhod v program je število kontrolnih bitov
 
-    m = 3
-    e = 1
+    m = int(ctrl_bits)
+    n = 2**m - 1 # matrix dimension if m>=2
+    k = n -m
+    
+    create_H(n)
 
-    # Izracunaj n
-    for i in range(m, ):
-        pass
 
 
 
@@ -213,5 +240,3 @@ if __name__ == "__main__":
     # Sprejemaj poljubno zaporedje binarnih simbolov (dolzina kot so kodne zamenjave)
     # Popravljaj napake v vhodnem zaporedju
     # Izpisi veljavne kodne zamenjave
-
-

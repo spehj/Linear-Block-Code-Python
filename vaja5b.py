@@ -28,7 +28,7 @@ def calcXor(dependable_arr, x_arr):
     return result_xor
 
 
-def kodneZamenjave(H, D, m_d):
+def kodne_zamenjave(H, D, m_d):
 
     z = []
     # Izdelamo seznam s stolpci od m-tega naprej
@@ -70,7 +70,7 @@ def generiraj_binarne(n):
 
 
 
-def izpisNapak(M, n, k):
+def izpis_napak(M, n, k):
     res = 0
     results = []
     e_s = 0
@@ -99,7 +99,7 @@ def izpisNapak(M, n, k):
 
     return e_max
 
-def izracunajKodne(X, H):
+def izracunaj_kodne(X, H):
     M = []
     for index, x in enumerate(X):
         rez = np.matmul(H, x) %2
@@ -115,7 +115,7 @@ def izracunajKodne(X, H):
     
 
 
-def odkrivajPopravi(M, H):
+def odkrivaj_popravi(M, H):
     while True:
         print(f"\nProgram za odkrivanje in popravljanje enkratnih napak. Uporabite q+enter za izhod.")
         zaporedje_bitov = input(
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     # Sestavite program, ki bo določil in izpisal vse možne kodne zamenjave M={xi}
     X = generiraj_binarne(n)
     #M = kodneZamenjave(H, D, m_d)
-    M = izracunajKodne(X, H)
+    M = izracunaj_kodne(X, H)
     print(len(M))
 
     print("\nVse mozne kodne zamenjave:\n")
@@ -202,7 +202,7 @@ if __name__ == "__main__":
 
     # TODO
     # Izpiše naj še vse kolikokratne napake je s podano matriko sposoben poravljati
-    e = izpisNapak(M, n, k)
+    e = izpis_napak(M, n, k)
 
     print(
         f"\nProgram je sposoben popravljati se vse {e}-kratne napake (e_max={e}).")
@@ -213,6 +213,6 @@ if __name__ == "__main__":
     # TODO
     # Na vhodu sprejema na vhodu poljubno zaporedje binarnih simbolov, enake dolžine, kot so kodne zamenjave.
     # S pomočjo podane matrike za preverjanje sodosti odkriva in popravlja napake v vhodnem zaporedju in izpisuje na izhodu veljavne kodne zamenjave.
-    odkrivajPopravi(M,H)
+    odkrivaj_popravi(M,H)
 
 
