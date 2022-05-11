@@ -2,6 +2,7 @@ from itertools import product
 from operator import xor
 import numpy as np
 import math
+import sys
 
 
 
@@ -171,10 +172,14 @@ def odkrivajPopravi(M, H):
 
 
 if __name__ == "__main__":
-
-    H = [[1, 0, 0, 0, 1, 1, 1], [0, 1, 0, 1, 0, 1, 1], [0, 0, 1, 1, 1, 0, 1]]
-    H = np.array(H)
+    try:
+        # Pass the file name, number of iterations and learning rate as an arguments
+        ctrl_bits = sys.argv[1]
+    except IndexError:
+        print("Usage of the script: python vaja5c.py <number of control bits>")
+        sys.exit(1)
     
+    print(ctrl_bits)
     
     # m = stevilo kontrolnih dvojiskih znakov
     # k = dolzina informacijskih blokov
@@ -183,36 +188,30 @@ if __name__ == "__main__":
     # m = stevilo vrstic v H
     # n = stevilo stolpcev v H
     # k = n-m
-
-    # rows = m, columns = n
-    m, n = H.shape
-    k = n-m
+    # n = k+m
     
     # TODO
-    # Sestavite program, ki bo določil in izpisal vse možne kodne zamenjave M={xi}
-    X = generiraj_binarne(n)
-    #M = kodneZamenjave(H, D, m_d)
-    M = izracunajKodne(X, H)
-    print(len(M))
+    # Program sam tvori matriko za preverjanje sodosti Hammingovega koda za odpravljanje vseh enkratnih napak
+    # Vhod v program je število kontrolnih bitov
 
-    print("\nVse mozne kodne zamenjave:\n")
-    print(M)
+    m = 3
+    e = 1
 
-    print("\n"+40*"-")
+    # Izracunaj n
+    for i in range(m, ):
+        pass
+
+
+
+
 
     # TODO
-    # Izpiše naj še vse kolikokratne napake je s podano matriko sposoben poravljati
-    e = izpisNapak(M, n, k)
+    # Izpiši vse kodne zamenjave
 
-    print(
-        f"\nProgram je sposoben popravljati se vse {e}-kratne napake (e_max={e}).")
-    print("\n"+40*"-")
-    
-    
-    
-    # TODO
-    # Na vhodu sprejema na vhodu poljubno zaporedje binarnih simbolov, enake dolžine, kot so kodne zamenjave.
-    # S pomočjo podane matrike za preverjanje sodosti odkriva in popravlja napake v vhodnem zaporedju in izpisuje na izhodu veljavne kodne zamenjave.
-    odkrivajPopravi(M,H)
+    # Izpiši kolikokratne napake je sposoben popravljati
+
+    # Sprejemaj poljubno zaporedje binarnih simbolov (dolzina kot so kodne zamenjave)
+    # Popravljaj napake v vhodnem zaporedju
+    # Izpisi veljavne kodne zamenjave
 
 
