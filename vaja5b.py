@@ -191,7 +191,6 @@ if __name__ == "__main__":
     X = generiraj_binarne(n)
     #M = kodneZamenjave(H, D, m_d)
     M = izracunaj_kodne(X, H)
-    print(len(M))
 
     print("\nVse mozne kodne zamenjave:\n")
     print(M)

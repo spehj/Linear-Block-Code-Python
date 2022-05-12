@@ -195,6 +195,9 @@ if __name__ == "__main__":
     X = generiraj_binarne(n)
     # Tvori matriko H
     H = create_H(n)
+    print("\nMatrika za preverjanje sodosti Hammingovega koda:\n")
+    print(H)
+    print("\n"+40*"-")
     # Izracunaj vse mozne kodne zamenjave
     M = izracunaj_kodne(X, H)
     print("\nVse mozne kodne zamenjave:\n")
