@@ -12,23 +12,7 @@ class BlockCode:
         self.m = M
 
 
-def xorOfArr(arr):
-    xor_arr = 0
-
-    for i in range(len(arr)):
-        xor_arr = xor_arr ^ arr[i]
-
-    return xor_arr
-
-
-def calcXor(dependable_arr, x_arr):
-    result_xor = 0
-    for i in range(len(dependable_arr)):
-        result_xor = result_xor ^ dependable_arr[i]*x_arr[i]
-    return result_xor
-
-
-def kodneZamenjave(H, D, m_d):
+def kodne_zamenjave(H, D, m_d):
 
     z = []
     # Izdelamo seznam s stolpci od m-tega naprej
@@ -70,7 +54,7 @@ def generiraj_binarne(n):
     return X
 
 
-def izpisNapak(M, n, k):
+def izpis_napak(M, n, k):
     res = 0
     results = []
     e_s = 0
@@ -100,7 +84,7 @@ def izpisNapak(M, n, k):
     return e_max
 
 
-def izracunajKodne(X, H):
+def izracunaj_kodne(X, H):
     M = []
     for index, x in enumerate(X):
         rez = np.matmul(H, x) % 2
@@ -112,13 +96,16 @@ def izracunajKodne(X, H):
     return M
 
 
-def odkrivajPopravi(M, H):
+def odkrivaj_popravi(M, H):
+    print(f"\nProgram za odkrivanje in popravljanje enkratnih napak.")
+    print(f"Uporabite q+enter za izhod.\n")
     while True:
-        print(f"\nProgram za odkrivanje in popravljanje enkratnih napak. Uporabite q+enter za izhod.")
+        
         zaporedje_bitov = input(
-            f"Vnesi poljubno zaporedje binarnih simbolov (dolzina = {len(M[0])} bitov):\n ")
+            f"Vnesite poljubno zaporedje binarnih simbolov (dolzina = {len(M[0])} bitov):\n ")
 
         if zaporedje_bitov == "q":
+            print()
             break
         elif len(zaporedje_bitov) == len(M[0]):
 
@@ -189,14 +176,16 @@ def create_H(n_max):
         if len(bin_str) < bin_places:
             bin_str = (bin_places-len(bin_str))*"0" + str(bin_str)
         final_bin_list.append(bin_str)
-    
-    h_cols = np.zeros((len(final_bin_list[0]), len(final_bin_list)))
+    #print(final_bin_list)
+    h_matrix = np.zeros((len(final_bin_list[0]), len(final_bin_list)))
     # zapisi vrstice v stolpce
-    for i in range(len(final_bin_list[0])):
-        for ind_j, j in enumerate(final_bin_list):
-            h_cols[i][ind_j] = j[ind_j]
+    for ind_i, final_str in enumerate(final_bin_list):
+        for ind_j, final_char in enumerate(final_str):
+            #print(final_char)
+            h_matrix[ind_j][ind_i] = final_char
+    #print(h_matrix)
+    return h_matrix
 
-    print(h_cols)
 
 if __name__ == "__main__":
     try:
@@ -225,9 +214,17 @@ if __name__ == "__main__":
     n = 2**m - 1 # matrix dimension if m>=2
     k = n -m
     
-    create_H(n)
+    X = generiraj_binarne(n)
+    H = create_H(n)
+    M = izracunaj_kodne(X, H)
+    print("\nVse mozne kodne zamenjave:\n")
+    print(M)
+    e = izpis_napak(M, n, k)
+    print(
+        f"\nProgram je sposoben popravljati se vse {e}-kratne napake (e_max={e}).")
+    print("\n"+40*"-")
 
-
+    odkrivaj_popravi(M,H)
 
 
 
