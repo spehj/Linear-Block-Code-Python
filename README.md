@@ -8,6 +8,8 @@ python vaja5b.py
 ```
 Second exercise (vaja5c.py):
 Complete the program by creating an array to verify the authenticity of the Hamming code to eliminate all one-time errors. The input to the program in this case is only the number of control bits of code. The program should then perform all the remaining steps as given in the previous point.
+
+For 3 control bits use:
 ```
-python vaja5c.py
+python vaja5c.py 3
 ```
