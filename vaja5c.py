@@ -146,37 +146,42 @@ def create_H(n_max):
     Funkcija kot vhod sprejme dolzino kodnih zamenjav in na izhodu vrne matriko za preverjanje sodosti Hammingovega koda za odpravljanje vseh
     enkratnih napak.
     """
+    # Izdelamo seznam decimalnih stevil od 1 do n
     n_list = []
     for n in range(1, n_max+1):
         n_list.append(n)
 
     n_list_bin = []
-
+    
+    # Pretvorimo v dvojisko vrednost
     for dec_num in n_list:
         bin_num = bin(dec_num)[2:]
         n_list_bin.append(bin_num)
 
     bin_places = len(n_list_bin[-1])
 
+    # Po potrebi dodamo vodilne nicle
     final_bin_list = []
     for bin_str in n_list_bin:
         if len(bin_str) < bin_places:
             bin_str = (bin_places-len(bin_str))*"0" + str(bin_str)
         final_bin_list.append(bin_str)
-    # print(final_bin_list)
+    
+    # Izdelamo matriko H z niclami ustrezne velikosti
     h_matrix = np.zeros((len(final_bin_list[0]), len(final_bin_list)))
-    # zapisi vrstice v stolpce
+
+    # Zapisemo vsa binarna stevila v stolpce matrike H
     for ind_i, final_str in enumerate(final_bin_list):
         for ind_j, final_char in enumerate(final_str):
             # print(final_char)
             h_matrix[ind_j][ind_i] = final_char
-    # print(h_matrix)
+    
     return h_matrix
 
 
 if __name__ == "__main__":
     try:
-        # Pass the file name, number of iterations and learning rate as an arguments
+        # Podaj stevilo kontrolnih znakov
         ctrl_bits = sys.argv[1]
     except IndexError:
         print("Usage of the script: python vaja5c.py <number of control bits>")
@@ -193,6 +198,7 @@ if __name__ == "__main__":
 
     # Izdelaj matriko vseh binarnih nizov dolzine n
     X = generiraj_binarne(n)
+    #print(X)
     # Tvori matriko H
     H = create_H(n)
     print("\nMatrika za preverjanje sodosti Hammingovega koda:\n")

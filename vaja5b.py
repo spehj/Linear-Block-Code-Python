@@ -62,7 +62,7 @@ def izracunaj_kodne(X, H):
 
     M = []
     for index, x in enumerate(X):
-        # Matricno mnozenje z vsakim izmed vektorjev v X
+        # Mnozenje z vsakim izmed vektorjev v X
         rez = np.matmul(H, x) % 2
         # Iscemo rezultat v obliki npr. [0,0,0]
         if np.amax(rez) == 0:
@@ -189,7 +189,7 @@ if __name__ == "__main__":
     # TODO
     # Sestavite program, ki bo določil in izpisal vse možne kodne zamenjave M={xi}
     X = generiraj_binarne(n)
-    #M = kodneZamenjave(H, D, m_d)
+
     M = izracunaj_kodne(X, H)
 
     print("\nVse mozne kodne zamenjave:\n")
